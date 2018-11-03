@@ -1,0 +1,1 @@
+cf push jworksmovies -p target/movies-0.0.1-SNAPSHOT.jar
