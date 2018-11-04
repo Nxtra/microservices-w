@@ -1,0 +1,5 @@
+---
+applications:
+- name: my-movies-app
+  memory: 620M
+  instances: 1
