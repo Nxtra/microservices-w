@@ -5,6 +5,7 @@ import com.example.moviedemo.model.Movie;
 import com.example.moviedemo.model.PopularMovie;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -13,17 +14,20 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.Collections;
-import java.util.List;
 
 
 @Slf4j
 @Service
 public class MovieService {
 
+    @Value("${baseUrl}")
+    String baseUrl;
+
+    private final String apiKey = "f379c50b4612bca1d8abc73f673ebc48";
+
     WebClient webClient;
     RestTemplate restTemplate;
 
-    private final String apiKey = "f379c50b4612bca1d8abc73f673ebc48";
 
     @Autowired
     public MovieService(WebClient webClient, RestTemplate restTemplate) {
@@ -53,8 +57,9 @@ public class MovieService {
 //                .retrieve()
 //                .bodyToMono(String.class);
 
-        String url = "https://api.themoviedb.org/3/movie/top_rated" + "?api_key=" + apiKey;
+        String url = baseUrl + "/movie/top_rated" + "?api_key=" + apiKey;
 
+        log.info("url is [{}]", url);
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 
